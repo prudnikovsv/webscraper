@@ -1,18 +1,15 @@
 package com.gh.prudnikovv.webscraper.service.scraper;
 
 import com.gh.prudnikovv.webscraper.service.scraper.parser.Parser;
-import com.gh.prudnikovv.webscraper.service.scraper.source.Source;
 import lombok.Getter;
 
 @Getter
-abstract class AbstractScraper<I, O> implements Scraper<I, O> {
+abstract class AbstractScraper<I> implements Scraper<I> {
 
-	private final Parser<I, O> parser;
-	private final Source<?> source;
+	private final Parser<I, ScrapeResult> parser;
 
 
-	public AbstractScraper(Parser<I, O> parser, Source<?> source) {
+	public AbstractScraper(Parser<I, ScrapeResult> parser) {
 		this.parser = parser;
-		this.source = source;
 	}
 }
