@@ -6,8 +6,9 @@ import com.gh.prudnikovv.webscraper.service.scraper.source.MultipleSource;
 import com.gh.prudnikovv.webscraper.service.scraper.source.Source;
 
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class MultipleSourceScraper<I> implements Scraper<I> {
+public final class MultipleSourceScraper<I> implements Scraper<I> {
 
 	private final Scraper<I> scraper;
 	private final boolean isAsync;
@@ -29,12 +30,18 @@ public class MultipleSourceScraper<I> implements Scraper<I> {
 				source.getClass()));
 		}
 
+		// TODO Consider to use custom thread pool!
 		MultipleSource mSource = (MultipleSource) source;
-		return ScrapeResult.of(mSource.getValue()
+		Stream<Object> objectStream = mSource.getValue()
 			.stream()
 			.map(scraper::scrape)
-			.map(ScrapeResult::getValue)
-			.collect(Collectors.toList()));
+			.map(ScrapeResult::getValue);
+
+		if (isAsync) {
+			objectStream = objectStream.parallel();
+		}
+
+		return ScrapeResult.of(objectStream.collect(Collectors.toList()));
 	}
 
 	@Override
