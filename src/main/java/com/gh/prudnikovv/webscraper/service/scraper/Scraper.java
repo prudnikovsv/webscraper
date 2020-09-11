@@ -1,6 +1,13 @@
 package com.gh.prudnikovv.webscraper.service.scraper;
 
-public interface Scraper {
+import com.gh.prudnikovv.webscraper.service.scraper.parser.Parser;
+import com.gh.prudnikovv.webscraper.service.scraper.source.Source;
 
-	<T> T scrape(ScrapingConfig scrapingConfig);
+public interface Scraper<I, O> {
+
+	O scrape();
+
+	Parser<I, O> getParser();
+
+	Source<?> getSource();
 }

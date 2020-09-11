@@ -1,22 +1,30 @@
 package com.gh.prudnikovv.webscraper.service.scraper.source;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-// TODO Resolve HTML NESTED ISSUE!
-@Getter
 @ToString
 @EqualsAndHashCode(callSuper = true)
-public class MultipleSource extends AbstractSource<Collection<? extends SimpleSource>> {
+public class MultipleSource extends AbstractSource<Set<SimpleSource>> {
 
-	private final Collection<? extends SimpleSource> source;
+	private final Set<SimpleSource> sources;
 
 
-	public MultipleSource(SourceType type, Collection<? extends SimpleSource> source) {
-		super(type);
-		this.source = source;
+	private MultipleSource(Collection<String> sources) {
+		this.sources = sources.stream()
+			.map(SimpleSource::of)
+			.collect(Collectors.toSet());
+	}
+
+	@Override
+	public Set<SimpleSource> getValue() {
+		return sources;
+	}
+
+	public static MultipleSource of(Collection<String> sources) {
+		return new MultipleSource(sources);
 	}
 }

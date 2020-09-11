@@ -1,6 +1,6 @@
 package com.gh.prudnikovv.webscraper.service.scraper.parser;
 
-public interface Parser<O, I> {
+public interface Parser<I, O> {
 
 	O parse(I input);
 }
