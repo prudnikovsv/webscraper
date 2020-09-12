@@ -7,5 +7,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(staticName = "of")
 public class ScrapeResult {
 
-	private final Object value;
+	private final Object data;
 }

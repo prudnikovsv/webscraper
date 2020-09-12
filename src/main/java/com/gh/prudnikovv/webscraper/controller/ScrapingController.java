@@ -17,7 +17,7 @@ import static com.gh.prudnikovv.webscraper.common.Urls.AIRPORTS_TABLE_PAGES;
 @RequiredArgsConstructor
 public class ScrapingController {
 
-	@GetMapping("/airports")
+	@GetMapping("/wiki-airports")
 	public ScrapeResult scrapeTable() {
 		return new MultipleSourceScraper<>(new HtmlScraper(new HtmlAirportParser()), true)
 			.scrape(MultipleSource.of(AIRPORTS_TABLE_PAGES));

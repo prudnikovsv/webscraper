@@ -30,12 +30,12 @@ public final class MultipleSourceScraper<I> implements Scraper<I> {
 				source.getClass()));
 		}
 
-		// TODO Consider to use custom thread pool!
+		// Consider to use custom thread pool!
 		MultipleSource mSource = (MultipleSource) source;
 		Stream<Object> objectStream = mSource.getValue()
 			.stream()
 			.map(scraper::scrape)
-			.map(ScrapeResult::getValue);
+			.map(ScrapeResult::getData);
 
 		if (isAsync) {
 			objectStream = objectStream.parallel();
